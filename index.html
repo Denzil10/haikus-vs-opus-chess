@@ -1,0 +1,210 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 Claude Haikus (voting) vs 1 Claude Opus: chess, no tools</title>
+<style>body{font:17px/1.5 system-ui,sans-serif;max-width:900px;margin:40px auto;padding:0 18px;background:#14161c;color:#e6e8ec}a{color:#7cc4ff}
+h1{font-size:30px}section{background:#1e2129;padding:18px 22px;margin:22px 0;border-radius:10px}.res{font-weight:700;color:#ffd84d}
+table{border-collapse:collapse;width:100%;font-size:14px}td{padding:3px 8px;border-bottom:1px solid #2c303a;vertical-align:top}tr.bad td{color:#ff6a5e}.s{color:#9aa4b2}code{background:#2c303a;padding:1px 5px}</style></head><body>
+<h1>5 Claude Haikus (voting) vs 1 Claude Opus: chess, no tools</h1>
+<p>Three games played on 2026-11-19. Every move is a fresh <code>claude -p --tools ""</code> call (no tools, no code, no memory between moves) that gets the move list, the FEN and a text diagram.
+The team: five independent Claude Haiku 5.5 calls per move, none sees another's answer; illegal answers are dropped, the move with the most votes is played, and a tie goes to the tied move named by the lowest-numbered Haiku.
+Referee: <a href="match.py">match.py</a> (python-chess). Afterwards Stockfish (depth 18, <a href="analyze.py">analyze.py</a>) graded every move; "loss" is centipawns lost by that move, clipped at ±1000.</p>
+<p><b>Result: Opus 5.5 won all three.</b> One Haiku alone was mated on move 21; the team was mated on move 26 (as White) and 47 (as Black).
+In both team games, the team's worst move came on a turn where all five Haikus picked a different move (16.Ne5, 16...c5). On move 16 of game 1, Haiku 5 proposed Re4, which Stockfish rates best (eval −1.33 → −1.29); Ne5, the tie-break pick, went to −9.7. Two team games is a small sample, not a rating.</p>
+<section><h2>Game 1: 5 Haikus (White) vs Opus 5.5 (Black)</h2><p>Opus gave material back twice (11...Bxd2+, 15...Rd6); then on move 16 the five Haikus split five ways and 16...Rxd4+ won the queen.</p><p class="res">Result: 0-1 (checkmate on move 26) · illegal answers: 5 Haikus 1, Opus 5.5 1</p>
+<p><a href="https://denzil10.github.io/claude-chess-engine/index.html?pgn=1.%20e4%20e5%202.%20Nf3%20Nc6%203.%20Bc4%20Bc5%204.%20c3%20Nf6%205.%20d4%20exd4%206.%20cxd4%20Bb4%2B%207.%20Nc3%20Nxe4%208.%20Qe2%20d5%209.%20Bd2%20O-O%2010.%20Nxe4%20dxe4%2011.%20Qxe4%20Bxd2%2B%2012.%20Kxd2%20Re8%2013.%20Qf4%20Be6%2014.%20Bxe6%20Rxe6%2015.%20Rhe1%20Rd6%2016.%20Ne5%20Rxd4%2B%2017.%20Qxd4%20Qxd4%2B%2018.%20Nd3%20Rd8%2019.%20Kc2%20Qc4%2B%2020.%20Kb1%20Qxd3%2B%2021.%20Kc1%20Qd2%2B%2022.%20Kb1%20Qxe1%2B%2023.%20Kc2%20Qd2%2B%2024.%20Kb1%20Nb4%2025.%20a3%20Qc2%23">Replay on a board</a> · <a href="games/g1.pgn">PGN</a> · <a href="games/g1.jsonl">full log (every prompt and reply)</a> · <a href="games/g1.eval.json">Stockfish review</a></p>
+<table><tr><td>#</td><td>side</td><td>move</td><td>loss</td><td>votes (team) / comment</td></tr>
+<tr><td>1.</td><td>5 Haikus</td><td>e4</td><td>0</td><td><b>e4 x5</b><br><span class="s">Haiku 1: e4; Haiku 2: e4; Haiku 3: e4; Haiku 4: e4; Haiku 5: e4</span></td></tr>
+<tr><td>1...</td><td>Opus 5.5</td><td>e5</td><td>0</td><td>Classical symmetry, fighting for the center immediately.</td></tr>
+<tr><td>2.</td><td>5 Haikus</td><td>Nf3</td><td>0</td><td><b>Nf3 x5</b><br><span class="s">Haiku 1: Nf3; Haiku 2: Nf3; Haiku 3: Nf3; Haiku 4: Nf3; Haiku 5: Nf3</span></td></tr>
+<tr><td>2...</td><td>Opus 5.5</td><td>Nc6</td><td>0</td><td>Defend e5 and develop the knight naturally.</td></tr>
+<tr><td>3.</td><td>5 Haikus</td><td>Bc4</td><td>9</td><td><b>Bc4 x4, Bb5 x1</b><br><span class="s">Haiku 1: Bc4; Haiku 2: Bc4; Haiku 3: Bc4; Haiku 4: Bb5; Haiku 5: Bc4</span></td></tr>
+<tr><td>3...</td><td>Opus 5.5</td><td>Bc5</td><td>6</td><td>Italian Game; developing bishop to its classic active diagonal.</td></tr>
+<tr><td>4.</td><td>5 Haikus</td><td>c3</td><td>12</td><td><b>c3 x5</b><br><span class="s">Haiku 1: c3; Haiku 2: c3; Haiku 3: c3; Haiku 4: c3; Haiku 5: c3</span></td></tr>
+<tr><td>4...</td><td>Opus 5.5</td><td>Nf6</td><td>6</td><td>Giuoco Piano; Nf6 attacks e4 and develops.</td></tr>
+<tr><td>5.</td><td>5 Haikus</td><td>d4</td><td>20</td><td><b>d4 x3, d3 x2</b><br><span class="s">Haiku 1: d4; Haiku 2: d4; Haiku 3: d4; Haiku 4: d3; Haiku 5: d3</span></td></tr>
+<tr><td>5...</td><td>Opus 5.5</td><td>exd4</td><td>9</td><td>Main line Giuoco Piano: capture in the center.</td></tr>
+<tr><td>6.</td><td>5 Haikus</td><td>cxd4</td><td>6</td><td><b>cxd4 x5</b><br><span class="s">Haiku 1: cxd4; Haiku 2: cxd4; Haiku 3: cxd4; Haiku 4: cxd4; Haiku 5: cxd4</span></td></tr>
+<tr><td>6...</td><td>Opus 5.5</td><td>Bb4+</td><td>0</td><td>Standard Giuoco Piano check, forcing White&#x27;s next decision.</td></tr>
+<tr><td>7.</td><td>5 Haikus</td><td>Nc3</td><td>30</td><td><b>Nc3 x5</b><br><span class="s">Haiku 1: Nc3; Haiku 2: Nc3; Haiku 3: Nc3; Haiku 4: Nc3; Haiku 5: Nc3</span></td></tr>
+<tr><td>7...</td><td>Opus 5.5</td><td>Nxe4</td><td>0</td><td>Grabbing the center pawn, heading into the sharp Møller Attack lines.</td></tr>
+<tr><td>8.</td><td>5 Haikus</td><td>Qe2</td><td>92</td><td><b>Qe2 x2, Qd3 x2, Bd2 x1</b><br><span class="s">Haiku 1: Qe2; Haiku 2: Qd3; Haiku 3: Bd2; Haiku 4: Qe2; Haiku 5: Qd3</span></td></tr>
+<tr><td>8...</td><td>Opus 5.5</td><td>d5</td><td>10</td><td>d5 defends the pinned knight and hits the c4 bishop.</td></tr>
+<tr class="bad"><td>9.</td><td>5 Haikus</td><td>Bd2</td><td>517</td><td><b>Bd3 x1, Bxd5 x1, Bd2 x2, O-O x1</b><br><span class="s">Haiku 1: Bd3; Haiku 2: Bxd5; Haiku 3: Bd2; Haiku 4: O-O; Haiku 5: Bd2</span></td></tr>
+<tr class="bad"><td></td><td>Opus 5.5</td><td>Nxd2</td><td></td><td>ILLEGAL, round 1</td></tr>
+<tr><td>9...</td><td>Opus 5.5</td><td>O-O</td><td>0</td><td>Castling breaks the e-file pin on my knight.</td></tr>
+<tr><td>10.</td><td>5 Haikus</td><td>Nxe4</td><td>11</td><td><b>Nxe4 x5</b><br><span class="s">Haiku 1: Nxe4; Haiku 2: Nxe4; Haiku 3: Nxe4; Haiku 4: Nxe4; Haiku 5: Nxe4</span></td></tr>
+<tr><td>10...</td><td>Opus 5.5</td><td>dxe4</td><td>7</td><td>Recapturing the knight wins material, since my bishop is safely covered.</td></tr>
+<tr><td>11.</td><td>5 Haikus</td><td>Qxe4</td><td>121</td><td><b>Ng5 x1, Qxe4 x3, Ne5 x1</b><br><span class="s">Haiku 1: Ng5; Haiku 2: Qxe4; Haiku 3: Qxe4; Haiku 4: Qxe4; Haiku 5: Ne5</span></td></tr>
+<tr class="bad"><td>11...</td><td>Opus 5.5</td><td>Bxd2+</td><td>618</td><td>Trading bishops first; Re8 will then hit the queen.</td></tr>
+<tr><td>12.</td><td>5 Haikus</td><td>Kxd2</td><td>5</td><td><b>Kxd2 x3, Nxd2 x2</b><br><span class="s">Haiku 1: Kxd2; Haiku 2: Kxd2; Haiku 3: Kxd2; Haiku 4: Nxd2; Haiku 5: Nxd2</span></td></tr>
+<tr><td>12...</td><td>Opus 5.5</td><td>Re8</td><td>5</td><td>Rook to e8 hits the queen and exploits White&#x27;s exposed king.</td></tr>
+<tr><td>13.</td><td>5 Haikus</td><td>Qf4</td><td>103</td><td><b>Qf4 x3, Qd3 x1, Qd5 x1</b><br><span class="s">Haiku 1: Qf4; Haiku 2: Qf4; Haiku 3: Qd3; Haiku 4: Qf4; Haiku 5: Qd5</span></td></tr>
+<tr><td>13...</td><td>Opus 5.5</td><td>Be6</td><td>0</td><td>Developing the bishop and shielding f7 from White&#x27;s pressure.</td></tr>
+<tr><td>14.</td><td>5 Haikus</td><td>Bxe6</td><td>0</td><td><b>Bxe6 x5</b><br><span class="s">Haiku 1: Bxe6; Haiku 2: Bxe6; Haiku 3: Bxe6; Haiku 4: Bxe6; Haiku 5: Bxe6</span></td></tr>
+<tr><td>14...</td><td>Opus 5.5</td><td>Rxe6</td><td>4</td><td>Recapturing with the rook keeps my structure intact and activates the rook.</td></tr>
+<tr class="bad"><td>15.</td><td>5 Haikus</td><td>Rhe1</td><td>393</td><td><b>Rhe1 x4, Ne5 x1</b><br><span class="s">Haiku 1: Rhe1; Haiku 2: Rhe1; Haiku 3: Ne5; Haiku 4: Rhe1; Haiku 5: Rhe1</span></td></tr>
+<tr class="bad"><td>15...</td><td>Opus 5.5</td><td>Rd6</td><td>534</td><td>Blocking d5 fork ideas and pressuring d4 pawn.</td></tr>
+<tr class="bad"><td>16.</td><td>5 Haikus</td><td>Ne5</td><td>817</td><td><b>Ne5 x1, Qe3 x1, Kc1 x1, Ng5 x1, Re4 x1</b><br><span class="s">Haiku 1: Ne5; Haiku 2: Qe3; Haiku 3: Kc1; Haiku 4: Ng5; Haiku 5: Re4</span></td></tr>
+<tr><td>16...</td><td>Opus 5.5</td><td>Rxd4+</td><td>0</td><td>The d4 pawn is pinned, so this check wins the queen.</td></tr>
+<tr><td>17.</td><td>5 Haikus</td><td>Qxd4</td><td>0</td><td><b>Ke2 x1, Qxd4 x2, Nd3 x1, Ke3 x1</b><br><span class="s">Haiku 1: Ke2; Haiku 2: Qxd4; Haiku 3: Qxd4; Haiku 4: Nd3; Haiku 5: Ke3</span></td></tr>
+<tr><td>17...</td><td>Opus 5.5</td><td>Qxd4+</td><td>0</td><td>Capturing the undefended queen with check.</td></tr>
+<tr><td>18.</td><td>5 Haikus</td><td>Nd3</td><td>0</td><td><b>Kc1 x1, Nd3 x3, Kc2 x1</b><br><span class="s">Haiku 1: Kc1; Haiku 2: Nd3; Haiku 3: Nd3; Haiku 4: Nd3; Haiku 5: Kc2</span></td></tr>
+<tr><td>18...</td><td>Opus 5.5</td><td>Rd8</td><td>0</td><td>Rook to d8 pins the knight to the king and adds pressure.</td></tr>
+<tr><td>19.</td><td>5 Haikus</td><td>Kc2</td><td>0</td><td><b>Re3 x2, Kc2 x3</b><br><span class="s">Haiku 1: Re3; Haiku 2: Kc2; Haiku 3: Re3; Haiku 4: Kc2; Haiku 5: Kc2</span></td></tr>
+<tr><td>19...</td><td>Opus 5.5</td><td>Qc4+</td><td>0</td><td>Checking the king and eyeing the loose knight on d3.</td></tr>
+<tr><td>20.</td><td>5 Haikus</td><td>Kb1</td><td>0</td><td><b>Kb1 x4, Kd2 x1</b><br><span class="s">Haiku 1: Kb1; Haiku 2: Kb1; Haiku 3: Kb1; Haiku 4: Kd2; Haiku 5: Kb1</span></td></tr>
+<tr><td>20...</td><td>Opus 5.5</td><td>Qxd3+</td><td>0</td><td>Grabbing the undefended knight with check wins decisive material.</td></tr>
+<tr><td>21.</td><td>5 Haikus</td><td>Kc1</td><td>0</td><td><b>Kc1 x5</b><br><span class="s">Haiku 1: Kc1; Haiku 2: Kc1; Haiku 3: Kc1; Haiku 4: Kc1; Haiku 5: Kc1</span></td></tr>
+<tr><td>21...</td><td>Opus 5.5</td><td>Qd2+</td><td>0</td><td>Queen check, backed by the rook, wins material.</td></tr>
+<tr><td>22.</td><td>5 Haikus</td><td>Kb1</td><td>0</td><td><b>Kb1 x5</b><br><span class="s">Haiku 1: Kb1; Haiku 2: Kb1; Haiku 3: Kb1; Haiku 4: Kb1; Haiku 5: Kb1</span></td></tr>
+<tr><td>22...</td><td>Opus 5.5</td><td>Qxe1+</td><td>0</td><td>The e1 rook is undefended, so I take it with check.</td></tr>
+<tr><td>23.</td><td>5 Haikus</td><td>Kc2</td><td>0</td><td><b>Kc2 x5</b><br><span class="s">Haiku 1: Kc2; Haiku 2: Kc2; Haiku 3: Kc2; Haiku 4: Kc2; Haiku 5: Kc2</span></td></tr>
+<tr><td>23...</td><td>Opus 5.5</td><td>Qd2+</td><td>0</td><td>Queen check forces the king; mate looms after Kb1.</td></tr>
+<tr><td>24.</td><td>5 Haikus</td><td>Kb1</td><td>0</td><td><b>Kb1 x5</b><br><span class="s">Haiku 1: Kb1; Haiku 2: Kb1; Haiku 3: Kb1; Haiku 4: Kb1; Haiku 5: Kb1</span></td></tr>
+<tr><td>24...</td><td>Opus 5.5</td><td>Nb4</td><td>0</td><td>The knight covers c2 and threatens Qc2#.</td></tr>
+<tr><td>25.</td><td>5 Haikus</td><td>a3</td><td>0</td><td><b>b3 x1, h3 x1, a3 x2</b><br><span class="s">Haiku 1: b3; Haiku 2: h3; Haiku 3: Rc1; Haiku 4: a3; Haiku 5: a3</span></td></tr>
+<tr><td>25...</td><td>Opus 5.5</td><td>Qc2#</td><td>0</td><td>Queen lands on c2, guarded by the knight. Checkmate.</td></tr>
+</table></section>
+<section><h2>Game 2: Opus 5.5 (White) vs 5 Haikus (Black)</h2><p>The team's worst move, 16...c5, was again a five-way split.</p><p class="res">Result: 1-0 (checkmate on move 47) · illegal answers: Opus 5.5 0, 5 Haikus 2</p>
+<p><a href="https://denzil10.github.io/claude-chess-engine/index.html?pgn=1.%20e4%20e5%202.%20Nf3%20Nc6%203.%20Bb5%20a6%204.%20Ba4%20Nf6%205.%20O-O%20Be7%206.%20Re1%20b5%207.%20Bb3%20O-O%208.%20c3%20d6%209.%20h3%20Na5%2010.%20Bc2%20Nc4%2011.%20d3%20Nb6%2012.%20Nbd2%20Bd7%2013.%20Nf1%20Be6%2014.%20Ng3%20Nbd7%2015.%20d4%20exd4%2016.%20cxd4%20c5%2017.%20d5%20Nb6%2018.%20dxe6%20fxe6%2019.%20b3%20Nbd7%2020.%20Bb2%20Re8%2021.%20Qd3%20Qc7%2022.%20Rad1%20e5%2023.%20Nf5%20Bf8%2024.%20Ng5%20h6%2025.%20Nf3%20Be7%2026.%20Nxd6%20Bxd6%2027.%20Qxd6%20Qxd6%2028.%20Rxd6%20Rad8%2029.%20Rxa6%20Ra8%2030.%20Rxa8%20Rxa8%2031.%20a4%20Re8%2032.%20axb5%20Nd5%2033.%20exd5%20Nf6%2034.%20Nxe5%20Nxd5%2035.%20Be4%20Rxe5%2036.%20Bxe5%20Nc3%2037.%20Bc6%20Na2%2038.%20b6%20Nb4%2039.%20b7%20Nxc6%2040.%20Bc7%20Nb8%2041.%20Bxb8%20Kf7%2042.%20Bd6%20Kf6%2043.%20b8%3DQ%20Kf5%2044.%20Qf8%2B%20Kg6%2045.%20Re6%2B%20Kh7%2046.%20Qf5%2B%20Kg8%2047.%20Re8%23">Replay on a board</a> · <a href="games/g2.pgn">PGN</a> · <a href="games/g2.jsonl">full log (every prompt and reply)</a> · <a href="games/g2.eval.json">Stockfish review</a></p>
+<table><tr><td>#</td><td>side</td><td>move</td><td>loss</td><td>votes (team) / comment</td></tr>
+<tr><td>1.</td><td>Opus 5.5</td><td>e4</td><td>6</td><td>Claiming the center with the classic king&#x27;s pawn opening.</td></tr>
+<tr><td>1...</td><td>5 Haikus</td><td>e5</td><td>7</td><td><b>e5 x5</b><br><span class="s">Haiku 1: e5; Haiku 2: e5; Haiku 3: e5; Haiku 4: e5; Haiku 5: e5</span></td></tr>
+<tr><td>2.</td><td>Opus 5.5</td><td>Nf3</td><td>2</td><td>Developing the knight and attacking e5.</td></tr>
+<tr><td>2...</td><td>5 Haikus</td><td>Nc6</td><td>0</td><td><b>Nc6 x5</b><br><span class="s">Haiku 1: Nc6; Haiku 2: Nc6; Haiku 3: Nc6; Haiku 4: Nc6; Haiku 5: Nc6</span></td></tr>
+<tr><td>3.</td><td>Opus 5.5</td><td>Bb5</td><td>1</td><td>Ruy Lopez: pressure the knight defending e5.</td></tr>
+<tr><td>3...</td><td>5 Haikus</td><td>a6</td><td>7</td><td><b>a6 x5</b><br><span class="s">Haiku 1: a6; Haiku 2: a6; Haiku 3: a6; Haiku 4: a6; Haiku 5: a6</span></td></tr>
+<tr><td>4.</td><td>Opus 5.5</td><td>Ba4</td><td>3</td><td>Main line Ruy Lopez: retreat the bishop, keep the pin pressure.</td></tr>
+<tr><td>4...</td><td>5 Haikus</td><td>Nf6</td><td>8</td><td><b>Nf6 x5</b><br><span class="s">Haiku 1: Nf6; Haiku 2: Nf6; Haiku 3: Nf6; Haiku 4: Nf6; Haiku 5: Nf6</span></td></tr>
+<tr><td>5.</td><td>Opus 5.5</td><td>O-O</td><td>1</td><td>Castling into the main line Ruy Lopez.</td></tr>
+<tr><td>5...</td><td>5 Haikus</td><td>Be7</td><td>2</td><td><b>Be7 x5</b><br><span class="s">Haiku 1: Be7; Haiku 2: Be7; Haiku 3: Be7; Haiku 4: Be7; Haiku 5: Be7</span></td></tr>
+<tr><td>6.</td><td>Opus 5.5</td><td>Re1</td><td>0</td><td>Main line Ruy Lopez, protecting e4 with the rook.</td></tr>
+<tr><td>6...</td><td>5 Haikus</td><td>b5</td><td>0</td><td><b>b5 x4, O-O x1</b><br><span class="s">Haiku 1: b5; Haiku 2: b5; Haiku 3: O-O; Haiku 4: b5; Haiku 5: b5</span></td></tr>
+<tr><td>7.</td><td>Opus 5.5</td><td>Bb3</td><td>0</td><td>Retreat the bishop to b3, the main line Ruy Lopez.</td></tr>
+<tr><td>7...</td><td>5 Haikus</td><td>O-O</td><td>0</td><td><b>O-O x5</b><br><span class="s">Haiku 1: O-O; Haiku 2: O-O; Haiku 3: O-O; Haiku 4: O-O; Haiku 5: O-O</span></td></tr>
+<tr><td>8.</td><td>Opus 5.5</td><td>c3</td><td>0</td><td>Mainline Ruy Lopez: preparing d4 and preventing Bg4/Nb4 ideas.</td></tr>
+<tr><td>8...</td><td>5 Haikus</td><td>d6</td><td>3</td><td><b>d6 x4, Bb7 x1</b><br><span class="s">Haiku 1: d6; Haiku 2: d6; Haiku 3: Bb7; Haiku 4: d6; Haiku 5: d6</span></td></tr>
+<tr><td>9.</td><td>Opus 5.5</td><td>h3</td><td>7</td><td>Main line Ruy Lopez, preventing ...Bg4 pin before d4.</td></tr>
+<tr><td>9...</td><td>5 Haikus</td><td>Na5</td><td>8</td><td><b>Na5 x2, Bb7 x1, Be6 x2</b><br><span class="s">Haiku 1: Na5; Haiku 2: Na5; Haiku 3: Bb7; Haiku 4: Be6; Haiku 5: Be6</span></td></tr>
+<tr><td>10.</td><td>Opus 5.5</td><td>Bc2</td><td>0</td><td>Retreat the bishop, keeping it on the a2-g8 diagonal.</td></tr>
+<tr><td>10...</td><td>5 Haikus</td><td>Nc4</td><td>6</td><td><b>Nc4 x5</b><br><span class="s">Haiku 1: Nc4; Haiku 2: Nc4; Haiku 3: Nc4; Haiku 4: Nc4; Haiku 5: Nc4</span></td></tr>
+<tr><td>11.</td><td>Opus 5.5</td><td>d3</td><td>25</td><td>Kick the knight from c4 and open my bishop.</td></tr>
+<tr><td>11...</td><td>5 Haikus</td><td>Nb6</td><td>9</td><td><b>Nxb2 x1, d5 x1, Nb6 x3</b><br><span class="s">Haiku 1: Nxb2; Haiku 2: d5; Haiku 3: Nb6; Haiku 4: Nb6; Haiku 5: Nb6</span></td></tr>
+<tr><td>12.</td><td>Opus 5.5</td><td>Nbd2</td><td>0</td><td>Standard plan: reroute knight via d2 toward the kingside.</td></tr>
+<tr><td>12...</td><td>5 Haikus</td><td>Bd7</td><td>79</td><td><b>Bd7 x2, Nbd7 x1, Be6 x1, Bb7 x1</b><br><span class="s">Haiku 1: Bd7; Haiku 2: Nbd7; Haiku 3: Be6; Haiku 4: Bb7; Haiku 5: Bd7</span></td></tr>
+<tr><td>13.</td><td>Opus 5.5</td><td>Nf1</td><td>81</td><td>Standard Ruy Lopez maneuver: knight heads toward g3.</td></tr>
+<tr><td>13...</td><td>5 Haikus</td><td>Be6</td><td>102</td><td><b>Be6 x2, c5 x1, Bc6 x2</b><br><span class="s">Haiku 1: Be6; Haiku 2: c5; Haiku 3: Bc6; Haiku 4: Bc6; Haiku 5: Be6</span></td></tr>
+<tr><td>14.</td><td>Opus 5.5</td><td>Ng3</td><td>79</td><td>Developing naturally, eyeing kingside play with the knight.</td></tr>
+<tr><td>14...</td><td>5 Haikus</td><td>Nbd7</td><td>65</td><td><b>Nbd7 x1, h6 x1, Qd7 x1, Nbd5 x1</b><br><span class="s">Haiku 1: Nbd7; Haiku 2: h6; Haiku 3: Nd7; Haiku 4: Qd7; Haiku 5: Nbd5</span></td></tr>
+<tr><td>15.</td><td>Opus 5.5</td><td>d4</td><td>2</td><td>Striking the center now that my knights are well placed.</td></tr>
+<tr><td>15...</td><td>5 Haikus</td><td>exd4</td><td>132</td><td><b>exd4 x5</b><br><span class="s">Haiku 1: exd4; Haiku 2: exd4; Haiku 3: exd4; Haiku 4: exd4; Haiku 5: exd4</span></td></tr>
+<tr><td>16.</td><td>Opus 5.5</td><td>cxd4</td><td>55</td><td>Recapture centrally, keeping a strong pawn on d4.</td></tr>
+<tr class="bad"><td>16...</td><td>5 Haikus</td><td>c5</td><td>417</td><td><b>c5 x1, Re8 x1, Nc5 x1, Ne5 x1, Nb6 x1</b><br><span class="s">Haiku 1: c5; Haiku 2: Re8; Haiku 3: Nc5; Haiku 4: Nde5; Haiku 5: Nb6</span></td></tr>
+<tr><td>17.</td><td>Opus 5.5</td><td>d5</td><td>0</td><td>Gaining space and kicking the e6 bishop.</td></tr>
+<tr><td>17...</td><td>5 Haikus</td><td>Nb6</td><td>98</td><td><b>Nb6 x1, Bxd5 x1, c4 x1, Rc8 x1, Bg4 x1</b><br><span class="s">Haiku 1: Nb6; Haiku 2: Bxd5; Haiku 3: c4; Haiku 4: Rc8; Haiku 5: Bg4</span></td></tr>
+<tr><td>18.</td><td>Opus 5.5</td><td>dxe6</td><td>24</td><td>Pawn captures the hanging bishop on e6, winning a piece.</td></tr>
+<tr><td>18...</td><td>5 Haikus</td><td>fxe6</td><td>0</td><td><b>fxe6 x5</b><br><span class="s">Haiku 1: fxe6; Haiku 2: fxe6; Haiku 3: fxe6; Haiku 4: fxe6; Haiku 5: fxe6</span></td></tr>
+<tr><td>19.</td><td>Opus 5.5</td><td>b3</td><td>28</td><td>Restrain ...c4 and prepare Bb2 to aim at the kingside.</td></tr>
+<tr><td>19...</td><td>5 Haikus</td><td>Nbd7</td><td>169</td><td><b>Nbd7 x3, Qd7 x1, h6 x1</b><br><span class="s">Haiku 1: Nbd7; Haiku 2: Qd7; Haiku 3: h6; Haiku 4: Nbd7; Haiku 5: Nbd7</span></td></tr>
+<tr><td>20.</td><td>Opus 5.5</td><td>Bb2</td><td>162</td><td>Developing the bishop, eyeing the long diagonal.</td></tr>
+<tr><td>20...</td><td>5 Haikus</td><td>Re8</td><td>19</td><td><b>Re8 x1, Qc7 x1, c4 x1, Nb6 x1, Ne5 x1</b><br><span class="s">Haiku 1: Rfe8; Haiku 2: Qc7; Haiku 3: c4; Haiku 4: Nb6; Haiku 5: Ne5</span></td></tr>
+<tr><td>21.</td><td>Opus 5.5</td><td>Qd3</td><td>28</td><td>Queen to d3 lines up with the c2 bishop against h7.</td></tr>
+<tr><td>21...</td><td>5 Haikus</td><td>Qc7</td><td>24</td><td><b>Qc7 x2, c4 x2, Ne5 x1</b><br><span class="s">Haiku 1: Qc7; Haiku 2: c4; Haiku 3: c4; Haiku 4: Qc7; Haiku 5: Ne5</span></td></tr>
+<tr><td>22.</td><td>Opus 5.5</td><td>Rad1</td><td>18</td><td>Rook to d1 piles pressure onto the weak d6 pawn.</td></tr>
+<tr><td>22...</td><td>5 Haikus</td><td>e5</td><td>88</td><td><b>c4 x1, e5 x2, Bf8 x1, Qb6 x1</b><br><span class="s">Haiku 1: c4; Haiku 2: e5; Haiku 3: e5; Haiku 4: Bf8; Haiku 5: Qb6</span></td></tr>
+<tr><td>23.</td><td>Opus 5.5</td><td>Nf5</td><td>11</td><td>Knight to f5 eyes d6 and e7 and seizes the outpost.</td></tr>
+<tr><td>23...</td><td>5 Haikus</td><td>Bf8</td><td>24</td><td><b>h6 x1, Nf8 x1, Bf8 x2, Nh5 x1</b><br><span class="s">Haiku 1: h6; Haiku 2: Nf8; Haiku 3: Bf8; Haiku 4: Nh5; Haiku 5: Bf8</span></td></tr>
+<tr><td>24.</td><td>Opus 5.5</td><td>Ng5</td><td>60</td><td>Kingside pressure: knight eyes e6, f7 and h7.</td></tr>
+<tr><td>24...</td><td>5 Haikus</td><td>h6</td><td>0</td><td><b>g6 x1, h6 x3, Be7 x1</b><br><span class="s">Haiku 1: g6; Haiku 2: h6; Haiku 3: Be7; Haiku 4: h6; Haiku 5: h6</span></td></tr>
+<tr><td>25.</td><td>Opus 5.5</td><td>Nf3</td><td>19</td><td>Knight under attack by h6, so retreating to safety.</td></tr>
+<tr><td>25...</td><td>5 Haikus</td><td>Be7</td><td>79</td><td><b>Nh5 x1, Be7 x3, Re6 x1</b><br><span class="s">Haiku 1: Nh5; Haiku 2: Be7; Haiku 3: Re6; Haiku 4: Be7; Haiku 5: Be7</span></td></tr>
+<tr><td>26.</td><td>Opus 5.5</td><td>Nxd6</td><td>23</td><td>Nf5xd6 wins a pawn, since the exchanges on d6 favor White.</td></tr>
+<tr><td>26...</td><td>5 Haikus</td><td>Bxd6</td><td>0</td><td><b>Rf8 x2, Bxd6 x3</b><br><span class="s">Haiku 1: Rf8; Haiku 2: Bxd6; Haiku 3: Bxd6; Haiku 4: Rf8; Haiku 5: Bxd6</span></td></tr>
+<tr><td>27.</td><td>Opus 5.5</td><td>Qxd6</td><td>7</td><td>Win the bishop: it is pinned to the queen on the d-file.</td></tr>
+<tr><td>27...</td><td>5 Haikus</td><td>Qxd6</td><td>10</td><td><b>Qxd6 x5</b><br><span class="s">Haiku 1: Qxd6; Haiku 2: Qxd6; Haiku 3: Qxd6; Haiku 4: Qxd6; Haiku 5: Qxd6</span></td></tr>
+<tr><td>28.</td><td>Opus 5.5</td><td>Rxd6</td><td>0</td><td>Recapturing the queen with the rook keeps material level.</td></tr>
+<tr><td>28...</td><td>5 Haikus</td><td>Rad8</td><td>31</td><td><b>Rad8 x1, Nf8 x1, Re7 x1, Red8 x1</b><br><span class="s">Haiku 1: Rad8; Haiku 2: Rd8; Haiku 3: Nf8; Haiku 4: Re7; Haiku 5: Red8</span></td></tr>
+<tr><td>29.</td><td>Opus 5.5</td><td>Rxa6</td><td>26</td><td>Grabbing the loose a6 pawn while my rook stays active.</td></tr>
+<tr><td>29...</td><td>5 Haikus</td><td>Ra8</td><td>5</td><td><b>Nh5 x1, Nb8 x1, Ra8 x2, Re7 x1</b><br><span class="s">Haiku 1: Nh5; Haiku 2: Nb8; Haiku 3: Rda8; Haiku 4: Ra8; Haiku 5: Re7</span></td></tr>
+<tr><td>30.</td><td>Opus 5.5</td><td>Rxa8</td><td>0</td><td>Trading rooks keeps my extra pawn and simplifies the position.</td></tr>
+<tr><td>30...</td><td>5 Haikus</td><td>Rxa8</td><td>0</td><td><b>Rxa8 x5</b><br><span class="s">Haiku 1: Rxa8; Haiku 2: Rxa8; Haiku 3: Rxa8; Haiku 4: Rxa8; Haiku 5: Rxa8</span></td></tr>
+<tr><td>31.</td><td>Opus 5.5</td><td>a4</td><td>0</td><td>Creating a passed a-pawn while protecting the a2 weakness.</td></tr>
+<tr><td>31...</td><td>5 Haikus</td><td>Re8</td><td>55</td><td><b>Re8 x2, Rxa4 x2, Nb6 x1</b><br><span class="s">Haiku 1: Re8; Haiku 2: Rxa4; Haiku 3: Rxa4; Haiku 4: Nb6; Haiku 5: Re8</span></td></tr>
+<tr><td>32.</td><td>Opus 5.5</td><td>axb5</td><td>3</td><td>Winning a pawn and creating a dangerous passed b-pawn.</td></tr>
+<tr><td>32...</td><td>5 Haikus</td><td>Nd5</td><td>179</td><td><b>Nd5 x1, Nh5 x1, Kh7 x1, Nb6 x1, Re7 x1</b><br><span class="s">Haiku 1: Nd5; Haiku 2: Nh5; Haiku 3: Kh7; Haiku 4: Nb6; Haiku 5: Re7</span></td></tr>
+<tr><td>33.</td><td>Opus 5.5</td><td>exd5</td><td>0</td><td>Free knight: the e4 pawn simply captures on d5.</td></tr>
+<tr><td>33...</td><td>5 Haikus</td><td>Nf6</td><td>0</td><td><b>Nf6 x2, Nb6 x1, Re7 x1, e4 x1</b><br><span class="s">Haiku 1: Nf6; Haiku 2: Nf6; Haiku 3: Nb6; Haiku 4: Re7; Haiku 5: e4</span></td></tr>
+<tr><td>34.</td><td>Opus 5.5</td><td>Nxe5</td><td>0</td><td>Grabbing the e5 pawn, backed by both rook and bishop.</td></tr>
+<tr><td>34...</td><td>5 Haikus</td><td>Nxd5</td><td>0</td><td><b>Nxd5 x3, Nd7 x2</b><br><span class="s">Haiku 1: Nxd5; Haiku 2: Nd7; Haiku 3: Nxd5; Haiku 4: Nd7; Haiku 5: Nxd5</span></td></tr>
+<tr><td>35.</td><td>Opus 5.5</td><td>Be4</td><td>0</td><td>Bishop hits the undefended knight and stays defended by the rook.</td></tr>
+<tr><td>35...</td><td>5 Haikus</td><td>Rxe5</td><td>0</td><td><b>Nf6 x2, Rxe5 x3</b><br><span class="s">Haiku 1: Nf6; Haiku 2: Rxe5; Haiku 3: Nf6; Haiku 4: Rxe5; Haiku 5: Rxe5</span></td></tr>
+<tr><td>36.</td><td>Opus 5.5</td><td>Bxe5</td><td>0</td><td>Bishop on b2 wins the undefended rook on e5.</td></tr>
+<tr><td>36...</td><td>5 Haikus</td><td>Nc3</td><td>0</td><td><b>Nb4 x1, Nf6 x1, Nf4 x1, Nc3 x2</b><br><span class="s">Haiku 1: Nb4; Haiku 2: Nf6; Haiku 3: Nf4; Haiku 4: Nc3; Haiku 5: Nc3</span></td></tr>
+<tr><td>37.</td><td>Opus 5.5</td><td>Bc6</td><td>0</td><td>Bishop to c6 dodges the knight and guards the passed b-pawn.</td></tr>
+<tr><td>37...</td><td>5 Haikus</td><td>Na2</td><td>0</td><td><b>Na2 x2, Nxb5 x1, Nd5 x2</b><br><span class="s">Haiku 1: Na2; Haiku 2: Nxb5; Haiku 3: Na2; Haiku 4: Nd5; Haiku 5: Nd5</span></td></tr>
+<tr><td>38.</td><td>Opus 5.5</td><td>b6</td><td>0</td><td>Pushing the passed pawn toward promotion while Black has no counterplay.</td></tr>
+<tr><td>38...</td><td>5 Haikus</td><td>Nb4</td><td>0</td><td><b>Nb4 x5</b><br><span class="s">Haiku 1: Nb4; Haiku 2: Nb4; Haiku 3: Nb4; Haiku 4: Nb4; Haiku 5: Nb4</span></td></tr>
+<tr><td>39.</td><td>Opus 5.5</td><td>b7</td><td>0</td><td>Pushing the passer; Black must give up the knight.</td></tr>
+<tr><td>39...</td><td>5 Haikus</td><td>Nxc6</td><td>0</td><td><b>Nxc6 x4, Na6 x1</b><br><span class="s">Haiku 1: Nxc6; Haiku 2: Nxc6; Haiku 3: Na6; Haiku 4: Nxc6; Haiku 5: Nxc6</span></td></tr>
+<tr><td>40.</td><td>Opus 5.5</td><td>Bc7</td><td>0</td><td>Bishop supports promotion; b8 falls next move.</td></tr>
+<tr><td>40...</td><td>5 Haikus</td><td>Nb8</td><td>0</td><td><b>Nb8 x2, Kf8 x2, Kf7 x1</b><br><span class="s">Haiku 1: Nb8; Haiku 2: Kf8; Haiku 3: Kf8; Haiku 4: Nb8; Haiku 5: Kf7</span></td></tr>
+<tr><td>41.</td><td>Opus 5.5</td><td>Bxb8</td><td>0</td><td>Capturing the knight leaves Black with only pawns; promotion follows.</td></tr>
+<tr><td>41...</td><td>5 Haikus</td><td>Kf7</td><td>0</td><td><b>Kf7 x4, Kf8 x1</b><br><span class="s">Haiku 1: Kf7; Haiku 2: Kf8; Haiku 3: Kf7; Haiku 4: Kf7; Haiku 5: Kf7</span></td></tr>
+<tr><td>42.</td><td>Opus 5.5</td><td>Bd6</td><td>0</td><td>Clearing b8 so the pawn can promote next move.</td></tr>
+<tr><td>42...</td><td>5 Haikus</td><td>Kf6</td><td>0</td><td><b>Kf6 x4, g5 x1</b><br><span class="s">Haiku 1: Kf6; Haiku 2: g5; Haiku 3: Kf6; Haiku 4: Kf6; Haiku 5: Kf6</span></td></tr>
+<tr><td>43.</td><td>Opus 5.5</td><td>b8=Q</td><td>0</td><td>Promoting to a queen; Black cannot stop it.</td></tr>
+<tr><td>43...</td><td>5 Haikus</td><td>Kf5</td><td>0</td><td><b>Kg6 x1, Kf5 x2, Kf7 x1, Kg5 x1</b><br><span class="s">Haiku 1: Kg6; Haiku 2: Kf5; Haiku 3: Kf5; Haiku 4: Kf7; Haiku 5: Kg5</span></td></tr>
+<tr><td>44.</td><td>Opus 5.5</td><td>Qf8+</td><td>0</td><td>Queen check drives the king toward the edge.</td></tr>
+<tr><td>44...</td><td>5 Haikus</td><td>Kg6</td><td>0</td><td><b>Kg6 x4, Kg5 x1</b><br><span class="s">Haiku 1: Kg6; Haiku 2: Kg6; Haiku 3: Kg6; Haiku 4: Kg6; Haiku 5: Kg5</span></td></tr>
+<tr><td>45.</td><td>Opus 5.5</td><td>Re6+</td><td>0</td><td>Rook check drives the king into the open.</td></tr>
+<tr><td>45...</td><td>5 Haikus</td><td>Kh7</td><td>0</td><td><b>Kh7 x4, Kg5 x1</b><br><span class="s">Haiku 1: Kh7; Haiku 2: Kh7; Haiku 3: Kh7; Haiku 4: Kg5; Haiku 5: Kh7</span></td></tr>
+<tr><td>46.</td><td>Opus 5.5</td><td>Qf5+</td><td>0</td><td>Qf5+ forces mate: Kg8 or Kh8 allows Re8#; g6 allows Qf7+ then Re8#.</td></tr>
+<tr><td>46...</td><td>5 Haikus</td><td>Kg8</td><td>0</td><td><b>Kh8 x2, Kg8 x3</b><br><span class="s">Haiku 1: Kh8; Haiku 2: Kg8; Haiku 3: Kg8; Haiku 4: Kh8; Haiku 5: Kg8</span></td></tr>
+<tr><td>47.</td><td>Opus 5.5</td><td>Re8#</td><td>0</td><td>Rook check drives the king to h7, setting up a mating net.</td></tr>
+</table></section>
+<section><h2>Warm-up: Haiku 5.5 alone (White) vs Opus 5.5 (Black)</h2><p>One Haiku, one call per move.</p><p class="res">Result: 0-1 (checkmate on move 21) · illegal answers: Haiku 5.5 1, Opus 5.5 0</p>
+<p><a href="https://denzil10.github.io/claude-chess-engine/index.html?pgn=1.%20e4%20e5%202.%20Nf3%20Nc6%203.%20Bc4%20Bc5%204.%20c3%20Nf6%205.%20d4%20exd4%206.%20cxd4%20Bb4%2B%207.%20Bd2%20Bxd2%2B%208.%20Nbxd2%20d5%209.%20Bb5%20dxe4%2010.%20Ng5%20Qxd4%2011.%20Qe2%20O-O%2012.%20Qe3%20Qxe3%2B%2013.%20Kd1%20Bg4%2B%2014.%20Ndf3%20exf3%2015.%20h4%20Rad8%2B%2016.%20Kc2%20Qd2%2B%2017.%20Kb1%20fxg2%2018.%20Rg1%20Bf5%2B%2019.%20Ne4%20Bxe4%2B%2020.%20Bd3%20Bxd3%23">Replay on a board</a> · <a href="games/g0.pgn">PGN</a> · <a href="games/g0.jsonl">full log (every prompt and reply)</a> · <a href="games/g0.eval.json">Stockfish review</a></p>
+<table><tr><td>#</td><td>side</td><td>move</td><td>loss</td><td>votes (team) / comment</td></tr>
+<tr><td>1.</td><td>Haiku 5.5</td><td>e4</td><td>22</td><td>Classic opening move, controlling the center.</td></tr>
+<tr><td>1...</td><td>Opus 5.5</td><td>e5</td><td>4</td><td>Classical reply, contesting the center symmetrically.</td></tr>
+<tr><td>2.</td><td>Haiku 5.5</td><td>Nf3</td><td>3</td><td>Classic open game move, grabbing the center.</td></tr>
+<tr><td>2...</td><td>Opus 5.5</td><td>Nc6</td><td>0</td><td>Defend e5 and develop the knight naturally.</td></tr>
+<tr><td>3.</td><td>Haiku 5.5</td><td>Bc4</td><td>0</td><td>Developing the bishop to c4, aiming at the f7 weakness.</td></tr>
+<tr><td>3...</td><td>Opus 5.5</td><td>Bc5</td><td>5</td><td>Italian Game; developing the bishop to its classical diagonal.</td></tr>
+<tr><td>4.</td><td>Haiku 5.5</td><td>c3</td><td>1</td><td>Solid move to prepare d4 and control the centre.</td></tr>
+<tr><td>4...</td><td>Opus 5.5</td><td>Nf6</td><td>0</td><td>Giuoco Piano; developing knight and hitting e4.</td></tr>
+<tr><td>5.</td><td>Haiku 5.5</td><td>d4</td><td>19</td><td>Striking the center with d4 while opening lines.</td></tr>
+<tr><td>5...</td><td>Opus 5.5</td><td>exd4</td><td>1</td><td>Main line Giuoco Piano: capture in the center.</td></tr>
+<tr><td>6.</td><td>Haiku 5.5</td><td>cxd4</td><td>2</td><td>Recapturing with the c-pawn to open lines.</td></tr>
+<tr><td>6...</td><td>Opus 5.5</td><td>Bb4+</td><td>2</td><td>Giuoco Piano main line: check with the bishop.</td></tr>
+<tr><td>7.</td><td>Haiku 5.5</td><td>Bd2</td><td>0</td><td>Block the check with a developing bishop move.</td></tr>
+<tr><td>7...</td><td>Opus 5.5</td><td>Bxd2+</td><td>0</td><td>Main line Giuoco: trade bishops, then strike with d5.</td></tr>
+<tr><td>8.</td><td>Haiku 5.5</td><td>Nbxd2</td><td>0</td><td>Developing the knight with tempo-neutral recapture</td></tr>
+<tr><td>8...</td><td>Opus 5.5</td><td>d5</td><td>0</td><td>Striking the center immediately, the classical freeing break.</td></tr>
+<tr><td>9.</td><td>Haiku 5.5</td><td>Bb5</td><td>51</td><td>Pinning the knight with Bb5 keeps the bishop safe.</td></tr>
+<tr><td>9...</td><td>Opus 5.5</td><td>dxe4</td><td>4</td><td>Capturing the center pawn and opening lines for my pieces.</td></tr>
+<tr class="bad"><td>10.</td><td>Haiku 5.5</td><td>Ng5</td><td>476</td><td>Retreating the attacked knight while keeping pressure on f7.</td></tr>
+<tr class="bad"><td>10...</td><td>Opus 5.5</td><td>Qxd4</td><td>405</td><td>Grab the free d4 pawn; it guards e4 and eyes f2.</td></tr>
+<tr class="bad"><td>11.</td><td>Haiku 5.5</td><td>Qe2</td><td>400</td><td>Protecting the knight and pressuring the e4 pawn.</td></tr>
+<tr><td>11...</td><td>Opus 5.5</td><td>O-O</td><td>0</td><td>Castling to safety while keeping the extra pawns.</td></tr>
+<tr><td>12.</td><td>Haiku 5.5</td><td>Qe3</td><td>89</td><td>Offering a queen trade while guarding the d2 knight.</td></tr>
+<tr><td>12...</td><td>Opus 5.5</td><td>Qxe3+</td><td>84</td><td>Trading queens keeps my two-pawn edge and kills White&#x27;s initiative.</td></tr>
+<tr class="bad"><td>13.</td><td>Haiku 5.5</td><td>Kd1</td><td>454</td><td>King steps to d1, keeping the knight on d2 defended.</td></tr>
+<tr><td>13...</td><td>Opus 5.5</td><td>Bg4+</td><td>0</td><td>Developing the bishop with check, keeping the attack on the white king.</td></tr>
+<tr><td>14.</td><td>Haiku 5.5</td><td>Ndf3</td><td>0</td><td>Blocking with the d2 knight; the g5 knight can recapture on f3.</td></tr>
+<tr><td>14...</td><td>Opus 5.5</td><td>exf3</td><td>0</td><td>Pawn takes the pinned knight, winning a piece and opening White&#x27;s king.</td></tr>
+<tr><td>15.</td><td>Haiku 5.5</td><td>h4</td><td>0</td><td>Defending the attacked knight on g5 with h4.</td></tr>
+<tr><td>15...</td><td>Opus 5.5</td><td>Rad8+</td><td>0</td><td>Rook to the open d-file checks the exposed king.</td></tr>
+<tr><td>16.</td><td>Haiku 5.5</td><td>Kc2</td><td>0</td><td>Only safe escape; the king must step aside.</td></tr>
+<tr><td>16...</td><td>Opus 5.5</td><td>Qd2+</td><td>0</td><td>Queen check with rook support starts a mating attack on White&#x27;s king.</td></tr>
+<tr><td>17.</td><td>Haiku 5.5</td><td>Kb1</td><td>0</td><td>Sidestepping the queen&#x27;s check toward the corner.</td></tr>
+<tr><td>17...</td><td>Opus 5.5</td><td>fxg2</td><td>0</td><td>Pawn forks toward the rook; white&#x27;s position collapses further.</td></tr>
+<tr><td>18.</td><td>Haiku 5.5</td><td>Rg1</td><td>0</td><td>Blocking the promotion square and attacking the g2 pawn.</td></tr>
+<tr><td>18...</td><td>Opus 5.5</td><td>Bf5+</td><td>0</td><td>Bishop check on the b1 diagonal; mate follows soon.</td></tr>
+<tr><td>19.</td><td>Haiku 5.5</td><td>Ne4</td><td>0</td><td>Only Ne4 blocks the bishop&#x27;s check.</td></tr>
+<tr><td>19...</td><td>Opus 5.5</td><td>Bxe4+</td><td>0</td><td>Bishop takes e4 with check, and mate follows next move.</td></tr>
+<tr class="bad"><td></td><td>Haiku 5.5</td><td>Bxc6</td><td></td><td>ILLEGAL, round 1</td></tr>
+<tr><td>20.</td><td>Haiku 5.5</td><td>Bd3</td><td>0</td><td>Forced: the bishop must block the check on d3.</td></tr>
+<tr><td>20...</td><td>Opus 5.5</td><td>Bxd3#</td><td>0</td><td>Bishop takes d3 with check, and the king has no escape. Mate.</td></tr>
+</table></section>
+<p>Video: <a href="VIDEO_LINK">5 Claude Haikus vs 1 Claude Opus (Short)</a>. The board used for replays is a chess engine Claude Code built from scratch: <a href="https://denzil10.github.io/claude-chess-engine/">play it</a>.</p>
+</body></html>
